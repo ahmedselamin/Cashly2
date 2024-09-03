@@ -1,4 +1,5 @@
 ﻿using Cashly.Server.Services.AuthService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cashly.Server.Controllers
@@ -41,6 +42,19 @@ namespace Cashly.Server.Controllers
             }
 
             var response = await _authService.Login(request.Username, request.Password);
+
+            if (!response.Success)
+            {
+                return BadRequest(response.Message);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpDelete("delete-user"), Authorize]
+        public async Task<ActionResult<ServiceResponse<bool>>> DeleteUser(int userId)
+        {
+            var response = await _authService.DeleteUser(userId);
 
             if (!response.Success)
             {
