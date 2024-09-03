@@ -86,6 +86,37 @@ public class AuthService : IAuthService
         return response;
     }
 
+    public async Task<ServiceResponse<bool>> DeleteUser(int userId)
+    {
+        var response = new ServiceResponse<bool>();
+        try
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user == null)
+            {
+                response.Success = false;
+                response.Message = "Not Found";
+
+                return response;
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            response.Message = "Account Deleted Successfuly.";
+            response.Data = true;
+
+        }
+        catch (Exception ex)
+        {
+            response.Success = false;
+            response.Message = ex.Message;
+        }
+
+        return response;
+    }
+
     public async Task<bool> UserExists(string username)
     {
         if (await _context.Users.AnyAsync(user => user.Username.ToLower()
@@ -141,4 +172,5 @@ public class AuthService : IAuthService
 
         return jwt;
     }
+
 }
