@@ -1,5 +1,6 @@
+global using Cashly.Server.Data;
+global using Cashly.Server.Models;
 global using Microsoft.EntityFrameworkCore;
-using Cashly.Server.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
