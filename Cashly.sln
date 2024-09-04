@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cashly.Server", "Cashly.Server\Cashly.Server.csproj", "{6808D923-040C-4FF1-B7E0-03F6230BF3EA}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "cashly.client", "Cashly.Client\cashly.client.esproj", "{0DF8A942-AEB6-4773-AF5A-697AD4709FEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,12 @@ Global
 		{6808D923-040C-4FF1-B7E0-03F6230BF3EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6808D923-040C-4FF1-B7E0-03F6230BF3EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6808D923-040C-4FF1-B7E0-03F6230BF3EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DF8A942-AEB6-4773-AF5A-697AD4709FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DF8A942-AEB6-4773-AF5A-697AD4709FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DF8A942-AEB6-4773-AF5A-697AD4709FEC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0DF8A942-AEB6-4773-AF5A-697AD4709FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DF8A942-AEB6-4773-AF5A-697AD4709FEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DF8A942-AEB6-4773-AF5A-697AD4709FEC}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

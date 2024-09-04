@@ -1,4 +1,6 @@
 ﻿
+using System.Security.Cryptography;
+
 namespace Cashly.Server.Services.AuthService;
 
 public class AuthService : IAuthService
@@ -34,4 +36,15 @@ public class AuthService : IAuthService
 
         return false;
     }
+
+    public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+    {
+        using (var hmac = new HMACSHA512())
+        {
+            passwordSalt = hmac.Key;
+            passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+        }
+    }
+
+
 }
