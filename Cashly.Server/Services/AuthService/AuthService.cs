@@ -15,14 +15,73 @@ public class AuthService : IAuthService
         _context = context;
         _config = config;
     }
-    public Task<ServiceResponse<int>> Register(User user, string password)
+    public async Task<ServiceResponse<int>> Register(User user, string password)
     {
-        throw new NotImplementedException();
+        var response = new ServiceResponse<int>();
+        try
+        {
+            if (await UserExists(user.Username))
+            {
+                response.Success = false;
+                response.Message = "User Already Exists!";
+
+                return response;
+            }
+
+            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            user.PasswordSalt = passwordSalt;
+            user.PasswordHash = passwordHash;
+
+            _context.Add(user);
+            await _context.SaveChangesAsync();
+
+            response.Data = user.Id;
+        }
+        catch (Exception ex)
+        {
+            response.Success = false;
+            response.Message = ex.Message;
+        }
+
+        return response;
     }
 
-    public Task<ServiceResponse<string>> Login(string username, string password)
+    public async Task<ServiceResponse<string>> Login(string username, string password)
     {
-        throw new NotImplementedException();
+        var response = new ServiceResponse<string>();
+        try
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.ToLower()
+                           .Equals(username.ToLower()));
+
+            if (user == null)
+            {
+                response.Success = false;
+                response.Message = "Not Found!";
+
+                return response;
+            }
+            else if (!VerifyPasswordHash(password, user.PasswordSalt, user.PasswordHash))
+            {
+                response.Success = false;
+                response.Message = "Wrong password";
+
+                return response;
+            }
+            else
+            {
+                response.Data = CreateToken(user);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            response.Success = false;
+            response.Message = ex.Message;
+        }
+
+        return response;
     }
 
     public async Task<ServiceResponse<bool>> DeleteUser(int userId)
