@@ -25,9 +25,34 @@ public class AuthService : IAuthService
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResponse<bool>> DeleteUser(int userId)
+    public async Task<ServiceResponse<bool>> DeleteUser(int userId)
     {
-        throw new NotImplementedException();
+        var response = new ServiceResponse<bool>();
+        try
+        {
+            //find user
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+            {
+                response.Success = false;
+                response.Message = "Not found!";
+
+                return response;
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            response.Message = "User Deleted Successfully.";
+            response.Data = true;
+        }
+        catch (Exception ex)
+        {
+            response.Success = false;
+            response.Message = ex.Message;
+        }
+
+        return response;
     }
 
     public async Task<bool> UserExists(string username)
