@@ -23,12 +23,14 @@ namespace Cashly.Server.Controllers
                 return BadRequest(ModelState);
             }
 
-            var response = await _authService.Register(
-             new User
-             {
-                 Username = request.Username
-             },
-             request.Password);
+            var response = await _authService
+                .Register(
+                 new User
+                 {
+                     Username = request.Username
+                 },
+                    request.Password
+                );
 
             if (!response.Success)
             {
